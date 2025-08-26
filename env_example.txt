@@ -1,0 +1,14 @@
+# Environment Variables for Comprehensive Car Finder
+# Copy this file to .env and fill in your actual API keys
+
+# OpenAI API Key for GPT-4 AI agents
+OPENAI_API_KEY=your-openai-api-key-here
+
+# Brave Search API Key for web search capabilities
+BRAVE_API_KEY=your-brave-api-key-here
+
+# Serper API Key for search functionality
+SERPER_API_KEY=your-serper-api-key-here
+
+# Browserbase API Key for web browsing tools
+BROWSERBASE_API_KEY=your-browserbase-api-key-here
