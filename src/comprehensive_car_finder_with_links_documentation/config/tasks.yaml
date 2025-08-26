@@ -1,0 +1,124 @@
+---
+process_buyer_specifications:
+  description: 'Process the specific buyer inputs: car type ({car_type}), car color
+    ({car_color}), preferred brands ({brands}), mileage preference ({miles}), price
+    range from {minimum_range} to {maximum_range}, clean title requirement ({clean_title}),
+    target state ({state}), and specific location ({location}). Validate the budget
+    range against local market expectations and create a structured search profile
+    for vehicle research in the specified location.'
+  expected_output: 'Structured buyer specification profile in markdown format containing:
+    car type specification, color preference, brand preferences, acceptable mileage
+    range, validated price range ({minimum_range} to {maximum_range}), clean title
+    requirement status, target state ({state}) and location ({location}), and optimized
+    location-specific search criteria for vehicle platforms'
+  agent: customer_requirements_specialist
+research_market_pricing_for_specifications:
+  description: Research typical market pricing and value ranges for {car_type} vehicles
+    from {brands} with {miles} mileage in {location}, {state} using KBB, Edmunds,
+    and other pricing sources. Provide realistic price expectations for the user's
+    specifications to help validate their budget range of {minimum_range} to {maximum_range}
+    and suggest optimal price targets.
+  expected_output: 'Comprehensive market pricing guide in markdown format including:
+    typical KBB and Edmunds price ranges for {car_type} from {brands} with {miles}
+    mileage, regional pricing variations for {location}, {state}, budget validation
+    analysis comparing user''s range ({minimum_range} to {maximum_range}) with market
+    reality, recommended target prices for good deals, seasonal pricing trends, depreciation
+    factors, and realistic price expectations with specific dollar amounts for different
+    condition levels'
+  agent: automotive_appraiser
+  context:
+  - process_buyer_specifications
+search_vehicles_with_specifications:
+  description: Using the market pricing research and buyer specifications, search
+    automotive platforms (AutoTrader, Cars.com, CarMax, Carvana, Facebook Marketplace)
+    for vehicles matching exact buyer requirements. Find {car_type} vehicles in {car_color}
+    from {brands}, with {miles} mileage, priced between {minimum_range} and {maximum_range},
+    with {clean_title} requirement in {location}, {state}. Focus on vehicles that
+    align with the pricing expectations from KBB/Edmunds research. Collect direct
+    links to each listing and gather detailed vehicle information including seller
+    details and listing specifics.
+  expected_output: 'Comprehensive location-specific search results in markdown format
+    including: detailed list of matching vehicles in {location}, {state} with direct
+    website links, complete vehicle specifications (year, make, model, mileage, price,
+    color, title status), seller information and contact details, listing platform
+    and URL for each vehicle, distance from {location}, local market pricing insights,
+    and preliminary ranking by specifications match, price, and proximity'
+  agent: automotive_market_analyst
+  context:
+  - process_buyer_specifications
+  - research_market_pricing_for_specifications
+evaluate_vehicle_values:
+  description: Using the vehicles identified in the market research, conduct detailed
+    fair market value analysis for each vehicle. Research KBB and Edmunds values,
+    adjust prices based on mileage and condition, factor in local market demand and
+    seasonal trends. Provide value recommendations and identify which vehicles offer
+    the best deals vs. market overpricing.
+  expected_output: 'Comprehensive valuation report in markdown format containing:
+    detailed value analysis for each researched vehicle, KBB and Edmunds pricing data,
+    condition and mileage-adjusted values, local market comparisons, seasonal pricing
+    factors, fair price ranges for each vehicle, value recommendation ratings (excellent
+    deal, fair price, overpriced), and summary of best value opportunities'
+  agent: automotive_appraiser
+  context:
+  - search_vehicles_with_specifications
+create_inspection_plans:
+  description: Using the vehicle valuation analysis, develop comprehensive inspection
+    and test drive plans for the top value vehicles identified by the appraiser. Create
+    vehicle-specific inspection checklists based on make, model, year, and known issues.
+    Focus inspection efforts on vehicles with the best value ratings and provide guidance
+    on scheduling test drives and pre-purchase inspections.
+  expected_output: 'Detailed inspection planning document in markdown format including:
+    vehicle-specific inspection checklists, test drive scheduling recommendations,
+    pre-purchase inspection guidelines, common issues to check for each vehicle, recommended
+    inspection timeline, local mechanic recommendations, and critical deal-breaker
+    issues to watch for'
+  agent: vehicle_inspection_manager
+  context:
+  - evaluate_vehicle_values
+documentation_and_security_requirements:
+  description: Research and compile comprehensive documentation requirements, security
+    checks, and registration procedures for vehicle purchase in {state} and {location}.
+    Include state-specific requirements for {state}, title verification processes,
+    security background checks needed, insurance requirements, and complete step-by-step
+    documentation checklists for vehicle purchase and registration in {location}.
+  expected_output: 'Complete {state}-specific documentation and security guide in
+    markdown format including: required purchase documents checklist for {state},
+    security verification steps needed, background checks required for financing,
+    title verification procedures in {state}, registration documents required in {location},
+    {state}-specific compliance requirements and fees, insurance documentation needed,
+    local DMV office locations in {location}, timeline for each security check, potential
+    red flags to watch for, and step-by-step process guides for secure vehicle purchase
+    in {state}'
+  agent: automotive_legal_compliance_specialist
+  context:
+  - create_inspection_plans
+generate_top_10_vehicle_recommendations_summary:
+  description: Compile all research data into a comprehensive Top 10 vehicle recommendations
+    report. Rank vehicles matching {car_type}, {car_color}, {brands}, {miles}, and
+    price range {minimum_range} to {maximum_range} in {location}, {state}. For each
+    vehicle, provide complete details, verification links, documentation requirements,
+    inspection checklists, budget analysis, and pre-purchase verification steps.
+  expected_output: |-
+    **TOP 10 VEHICLE RECOMMENDATIONS REPORT** in structured markdown format with:
+
+    **For Each of the Top 10 Vehicles:**
+    1. **Vehicle Summary** - Make, model, year, mileage, price, color, location
+    2. **Provider Details** - Seller information, dealership/private party, contact info
+    3. **Verification Links** - Direct link to listing, VIN lookup links, vehicle history report links
+    4. **Budget Analysis** - KBB/Edmunds comparison, deal quality assessment, total cost breakdown including taxes/fees
+    5. **Documentation Required** - Title verification, bill of sale, registration forms, insurance requirements specific to {state}
+    6. **Inspection Checklist** - Vehicle-specific items to check, mechanical inspection points, test drive checklist
+    7. **Registration Documents** - Required paperwork for {state} DMV, processing timeline, associated costs
+    8. **Pre-Purchase Verification** - Security checks needed, red flags to watch for, seller verification steps
+    9. **Action Timeline** - Step-by-step process from initial contact to final purchase
+
+    **Overall Summary:**
+    - Ranking methodology explanation
+    - Best value recommendations
+    - Market pricing insights
+    - Total investment analysis
+    - Risk assessment for each vehicle
+    - Next steps with prioritized action plan
+  agent: customer_requirements_specialist
+  context:
+  - documentation_and_security_requirements

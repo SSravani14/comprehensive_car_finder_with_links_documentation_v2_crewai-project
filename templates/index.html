@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Car Finder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🚗 Comprehensive Car Finder</h1>
+            <p>Find your perfect car with AI-powered search and analysis</p>
+        </header>
+
+        <main class="main-content">
+            <div class="search-section">
+                <form id="searchForm" class="search-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="car_type">Car Type</label>
+                            <select id="car_type" name="car_type" required>
+                                <option value="sedan">Sedan</option>
+                                <option value="suv">SUV</option>
+                                <option value="truck">Truck</option>
+                                <option value="hatchback">Hatchback</option>
+                                <option value="coupe">Coupe</option>
+                                <option value="convertible">Convertible</option>
+                                <option value="wagon">Wagon</option>
+                                <option value="minivan">Minivan</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="car_color">Color Preference</label>
+                            <select id="car_color" name="car_color">
+                                <option value="any">Any Color</option>
+                                <option value="white">White</option>
+                                <option value="black">Black</option>
+                                <option value="silver">Silver</option>
+                                <option value="gray">Gray</option>
+                                <option value="red">Red</option>
+                                <option value="blue">Blue</option>
+                                <option value="green">Green</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="brands">Preferred Brands</label>
+                            <input type="text" id="brands" name="brands" placeholder="e.g., Toyota, Honda, Ford" value="any">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="miles">Mileage Preference</label>
+                            <select id="miles" name="miles">
+                                <option value="any">Any Mileage</option>
+                                <option value="under 50k">Under 50k</option>
+                                <option value="50k-100k">50k-100k</option>
+                                <option value="100k-150k">100k-150k</option>
+                                <option value="over 150k">Over 150k</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="minimum_range">Minimum Price ($)</label>
+                            <input type="number" id="minimum_range" name="minimum_range" placeholder="10000" value="10000" min="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="maximum_range">Maximum Price ($)</label>
+                            <input type="number" id="maximum_range" name="maximum_range" placeholder="50000" value="50000" min="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="clean_title">Clean Title Required</label>
+                            <select id="clean_title" name="clean_title">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="state">State</label>
+                            <select id="state" name="state" required>
+                                <option value="CA">California</option>
+                                <option value="TX">Texas</option>
+                                <option value="FL">Florida</option>
+                                <option value="NY">New York</option>
+                                <option value="PA">Pennsylvania</option>
+                                <option value="IL">Illinois</option>
+                                <option value="OH">Ohio</option>
+                                <option value="GA">Georgia</option>
+                                <option value="NC">North Carolina</option>
+                                <option value="MI">Michigan</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="location">City/Location</label>
+                            <input type="text" id="location" name="location" placeholder="e.g., Los Angeles" value="Los Angeles" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="search-btn" id="searchBtn">
+                        <span class="btn-text">🔍 Search for Cars</span>
+                        <span class="btn-loading" style="display: none;">
+                            <div class="spinner"></div>
+                            Searching...
+                        </span>
+                    </button>
+                </form>
+            </div>
+
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <div class="results-header">
+                    <h2>Search Results</h2>
+                    <div class="status-indicator" id="statusIndicator"></div>
+                </div>
+                
+                <div class="results-content" id="resultsContent">
+                    <div class="loading-message" id="loadingMessage">
+                        <div class="spinner large"></div>
+                        <p>AI agents are working to find your perfect car...</p>
+                        <p class="status-text">This may take a few minutes as we analyze the market, check pricing, and verify vehicle details.</p>
+                    </div>
+                    
+                    <div class="error-message" id="errorMessage" style="display: none;">
+                        <p>❌ An error occurred during the search. Please try again.</p>
+                    </div>
+                    
+                    <div class="success-results" id="successResults" style="display: none;">
+                        <div class="results-text" id="resultsText"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
